@@ -23,9 +23,9 @@ public class Paddle : MonoBehaviour
 
     private Camera mainCamera;
     private float paddleInitialY;
-    private float LeftClamp = 0;
-    private float RightClamp = 410;
-    private float paddleOffset = 0.1f;
+    private float leftClamp = 0;
+    private float rightClamp = 410;
+    private float screenEdgeOffset = 0.1f;
     private SpriteRenderer sr;
     private BoxCollider2D boxCol;
 
@@ -42,12 +42,8 @@ public class Paddle : MonoBehaviour
         screenBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, mainCamera.transform.position.z));
         objectWidth = sr.bounds.extents.x; //extents = size of width / 2
 
-        LeftClamp = -screenBounds.x + (objectWidth + paddleOffset);
-        RightClamp = screenBounds.x - (objectWidth + paddleOffset);
-
-        Debug.Log("LeftClamp: " + LeftClamp.ToString());
-        Debug.Log("RightClamp: " + RightClamp.ToString());
-
+        leftClamp = -screenBounds.x + (objectWidth + screenEdgeOffset);
+        rightClamp = screenBounds.x - (objectWidth + screenEdgeOffset);
     }
 
     // Update is called once per frame
@@ -60,26 +56,7 @@ public class Paddle : MonoBehaviour
     {
         float mousePositionPixels = Input.mousePosition.x;
         float mousePositionWorldX = mainCamera.ScreenToWorldPoint(new Vector3(mousePositionPixels, 0, 0)).x;
-        mousePositionWorldX = Mathf.Clamp(mousePositionWorldX, LeftClamp, RightClamp);
+        mousePositionWorldX = Mathf.Clamp(mousePositionWorldX, leftClamp, rightClamp);
         transform.position = new Vector3(mousePositionWorldX, paddleInitialY, 0);
-
-        //       Debug.Log("Input.mousePosition.x: " + Input.mousePosition.x.ToString() + "\r\n" + "mousePositionWorldX: " + mousePositionWorldX.ToString());
-
-#if (PI)
-        float paddleShift = (defaultPaddleWidthInPixels - ((defaultPaddleWidthInPixels / 2) * sr.size.x)) / 2;
-        float leftClamp = objectWidth / 2;//defaultLeftClamp - paddleShift;
-        float rightClamp = defaultRightClamp + paddleShift;
-        float mousePositionPixels = Mathf.Clamp(Input.mousePosition.x, leftClamp, rightClamp);
-        float mousePositionWorldX = mainCamera.ScreenToWorldPoint(new Vector3(mousePositionPixels, 0, 0)).x;
-        transform.position = new Vector3(mousePositionWorldX, paddleInitialY, 0);
-//     Debug.Log("Input.mousePosition.x: " + Input.mousePosition.x.ToString());
-#endif
-
-#if (PI)
-        Vector3 viewPos = transform.position;
-        viewPos.x = Mathf.Clamp(viewPos.x, screenBounds.x + objectWidth, screenBounds.x * -1 - objectWidth);
-        viewPos.y = Mathf.Clamp(viewPos.y, screenBounds.y + objectHeight, screenBounds.y * -1 - objectHeight);
-        transform.position = viewPos;
-#endif
     }
 }
