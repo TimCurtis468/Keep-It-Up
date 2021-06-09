@@ -49,11 +49,11 @@ TagManager:
   - name: Walls
     uniqueID: 3771425373
     locked: 0
-  - name: Paddle
-    uniqueID: 3097342147
-    locked: 0
   - name: Balls
     uniqueID: 4211671435
+    locked: 0
+  - name: Paddle
+    uniqueID: 3097342147
     locked: 0
   - name: Bricks
     uniqueID: 1967537991
