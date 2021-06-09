@@ -8,6 +8,7 @@ TagManager:
   - Ball
   - Brick
   - DeathWall
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -17,9 +18,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - Ball
+  - Background
+  - Ball2
   - 
   - 
   - 
@@ -44,6 +45,9 @@ TagManager:
   m_SortingLayers:
   - name: Background
     uniqueID: 3417164717
+    locked: 0
+  - name: Walls
+    uniqueID: 3771425373
     locked: 0
   - name: Paddle
     uniqueID: 3097342147
