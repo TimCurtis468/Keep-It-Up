@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,11 +27,15 @@ public class Paddle : MonoBehaviour
     private float leftClamp = 0;
     private float rightClamp = 410;
     private float screenEdgeOffset = 0.1f;
+    private float BALL_SPEED_FACTOR = 1.1f;
+    private float MAX_BALL_SPEED = 3.0f;
     private SpriteRenderer sr;
     private BoxCollider2D boxCol;
 
     private Vector2 screenBounds;
     private float objectWidth;
+
+    public static event Action<Paddle> OnPaddleHit;
 
     void Start()
     {
@@ -62,24 +67,46 @@ public class Paddle : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D coll)
     {
+        float speed;
+        float vel_x;
+        float vel_y;
+
         if (coll.gameObject.tag == "Ball")
         {
             Rigidbody2D ballRb = coll.gameObject.GetComponent<Rigidbody2D>();
             Vector3 hitPoint = coll.contacts[0].point;
             Vector3 paddleCentre = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
 
-            ballRb.velocity = Vector2.zero;
-
-            float difference = paddleCentre.x - hitPoint.x;
-
-            if (hitPoint.x < paddleCentre.x)
+            /* Get speed from x,y velocity */
+            speed = Mathf.Sqrt((ballRb.velocity.x * ballRb.velocity.x) + (ballRb.velocity.y * ballRb.velocity.y));
+            /* Limit speed to max value */
+            if (speed < MAX_BALL_SPEED)
             {
-                ballRb.AddForce(new Vector2(-(Mathf.Abs(difference * 200)), BallsManager.Instance.initialBallSpeed));
+//                speed *= BALL_SPEED_FACTOR;
             }
             else
             {
-                ballRb.AddForce(new Vector2(Mathf.Abs(difference * 200), BallsManager.Instance.initialBallSpeed));
+//                speed = MAX_BALL_SPEED;
             }
+
+            Debug.Log("x, y, Speed: " + ballRb.velocity.x.ToString() + ", " + ballRb.velocity.y + ", " + speed.ToString());
+
+            float difference = paddleCentre.x - hitPoint.x;
+
+            /* Calculate X and Y velocities by using position of collision on paddle for X */
+            if (hitPoint.x < paddleCentre.x)
+            {
+                vel_x = -(Mathf.Abs(difference * 200));
+            }
+            else
+            {
+                vel_x = Mathf.Abs(difference * 200);
+            }
+            /* Modify Y to keep speed constant (plus a bit added each time) */
+            vel_y = Mathf.Sqrt(Mathf.Abs((vel_x * vel_x) - (speed * speed)));   // ABS it to stop errors when getting -ve number */
+            ballRb.AddForce(new Vector2(vel_x, vel_y));
+
+            OnPaddleHit?.Invoke(this);
         }
     }
 }

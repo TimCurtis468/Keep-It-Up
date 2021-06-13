@@ -33,23 +33,27 @@ public class GameManager : MonoBehaviour
 
     public static event Action<int> OnLifeLost;
 
+    public GameObject LeftWall;
+    public GameObject RightWall;
+    private Vector2 screenBounds;
+    private Camera mainCamera;
+
     private void Start()
     {
-        this.Lives = AvailableLives;
-        Screen.SetResolution(540, 960, false);
-        Ball.OnBallDeath += OnBallDeath;
- //       Brick.OnBrickDesctruction += OnBrickDestruction;
-    }
+        float objectWidth;
 
- //   private void OnBrickDestruction(Brick obj)
- //   {
- //       if (BricksManager.Instance.RemainingBricks.Count <= 0)
- //       {
- //           BallsManager.Instance.ResetBalls();
- //           GameManager.Instance.IsGameStarted = false;
- //           BricksManager.Instance.LoadNextLevel();
- //       }
- //   }
+        this.Lives = AvailableLives;
+        Ball.OnBallDeath += OnBallDeath;
+
+        /* Set position of walls to match screen resolution */
+        mainCamera = FindObjectOfType<Camera>();
+        screenBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, mainCamera.transform.position.z));
+        objectWidth = RightWall.GetComponent<SpriteRenderer>().bounds.extents.x;
+        RightWall.transform.position = new Vector3(screenBounds.x + (objectWidth / 2), RightWall.transform.position.y, RightWall.transform.position.z);
+
+        objectWidth = LeftWall.GetComponent<SpriteRenderer>().bounds.extents.x;
+        LeftWall.transform.position = new Vector3(-(screenBounds.x + (objectWidth / 2)), LeftWall.transform.position.y, LeftWall.transform.position.z);
+    }
 
     public void RestartGame()
     {

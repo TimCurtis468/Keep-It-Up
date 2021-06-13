@@ -13,8 +13,8 @@ public class Ball : MonoBehaviour
 //    public float lightningBallDuration = 10;
 
     public static event Action<Ball> OnBallDeath;
-//    public static event Action<Ball> OnLightningBallEnable;
-//    public static event Action<Ball> OnLightningBallDisable;
+    //    public static event Action<Ball> OnLightningBallEnable;
+    //    public static event Action<Ball> OnLightningBallDisable;
 
     private void Awake()
     {
