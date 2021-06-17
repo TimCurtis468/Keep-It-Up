@@ -44,7 +44,7 @@ public class BallsManager : MonoBehaviour
 //        if (!GameManager.Instance.IsGameStarted)
 //        {
             Vector3 paddlePosition = Paddle.Instance.gameObject.transform.position;
-            Vector3 ballPosition = new Vector3(paddlePosition.x, paddlePosition.y + 0.29f, 0);
+            Vector3 ballPosition = new Vector3(paddlePosition.x, paddlePosition.y + 0.27f, 0);
             initialBall.transform.position = ballPosition;
 
             if (Input.GetMouseButtonDown(0))
@@ -69,7 +69,7 @@ public class BallsManager : MonoBehaviour
     private void InitBall()
     {
         Vector3 paddlePosition = Paddle.Instance.gameObject.transform.position;
-        Vector3 startingPosition = new Vector3(paddlePosition.x, paddlePosition.y + 0.29f, 0);
+        Vector3 startingPosition = new Vector3(paddlePosition.x, paddlePosition.y + 0.27f, 0);
         initialBall = Instantiate(ballPrefab, startingPosition, Quaternion.identity);
         initialBallRb = initialBall.GetComponent<Rigidbody2D>();
 
