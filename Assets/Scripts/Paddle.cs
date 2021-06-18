@@ -82,11 +82,11 @@ public class Paddle : MonoBehaviour
             /* Limit speed to max value */
             if (speed < MAX_BALL_SPEED)
             {
-//                speed *= BALL_SPEED_FACTOR;
+                speed *= BALL_SPEED_FACTOR;
             }
             else
             {
-//                speed = MAX_BALL_SPEED;
+                speed = MAX_BALL_SPEED;
             }
 
             Debug.Log("x, y, Speed: " + ballRb.velocity.x.ToString() + ", " + ballRb.velocity.y + ", " + speed.ToString());
