@@ -15,4 +15,9 @@ public class Block : MonoBehaviour
     {
         
     }
+
+    public void RemoveBlock()
+    {
+        Destroy(this.gameObject);
+    }
 }

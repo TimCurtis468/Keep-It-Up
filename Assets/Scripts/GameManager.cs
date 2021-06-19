@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        this.Lives = AvailableLives;
     }
 
     private void OnBallDeath(Ball obj)
@@ -75,8 +76,7 @@ public class GameManager : MonoBehaviour
                 OnLifeLost?.Invoke(this.Lives);
                 BallsManager.Instance.ResetBalls();
                 IsGameStarted = false;
-//                BricksManager.Instance.LoadLevel(BricksManager.Instance.CurrentLevel);
-
+                BlocksManager.Instance.NewLevel();
             }
         }
     }

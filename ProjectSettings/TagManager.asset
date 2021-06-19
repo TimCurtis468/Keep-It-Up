@@ -58,6 +58,9 @@ TagManager:
   - name: Bricks
     uniqueID: 1967537991
     locked: 0
+  - name: EndScreen
+    uniqueID: 3395812515
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

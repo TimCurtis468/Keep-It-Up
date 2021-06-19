@@ -24,7 +24,7 @@ public class Ball : MonoBehaviour
     public void Die()
     {
         OnBallDeath?.Invoke(this);
-        Destroy(gameObject, 1);
+        Destroy(this.gameObject);
     }
 
 //    internal void StartLightningBall()
