@@ -25,10 +25,11 @@ public class BallsManager : MonoBehaviour
     #endregion
     [SerializeField]
     private Ball ballPrefab;
+    public Heart heartPrefab;
 
     private Ball initialBall;
 
-    private Rigidbody2D initialBallRb;
+    private Rigidbody2D initialBallRb; 
 
     private Camera mainCamera;
     private Vector2 screenBounds;
@@ -41,6 +42,9 @@ public class BallsManager : MonoBehaviour
     public List<Ball> Balls { get; set; }
     public List<Rigidbody2D> BallRbs { get; set; }
 
+    public List<Heart> Hearts { get; set; }
+
+
     private void Start()
     {
         mainCamera = FindObjectOfType<Camera>();
@@ -51,6 +55,7 @@ public class BallsManager : MonoBehaviour
 
     private void Update()
     {
+        Rigidbody2D heartRb;
         if (!GameManager.Instance.IsGameStarted)
         {
             //            Vector3 paddlePosition = Paddle.Instance.gameObject.transform.position;
@@ -72,8 +77,13 @@ public class BallsManager : MonoBehaviour
 
                     BallRbs[i].isKinematic = false;
                     BallRbs[i].AddForce(new Vector2(x_speed, y_speed));
-                    GameManager.Instance.IsGameStarted = true;
                 }
+
+                heartRb = Hearts[0].GetComponent<Rigidbody2D>();
+                heartRb.isKinematic = false;
+                heartRb.AddForce(new Vector2(100, 500));
+
+                GameManager.Instance.IsGameStarted = true;
             }
         }
     }
@@ -92,9 +102,11 @@ public class BallsManager : MonoBehaviour
     {
         Ball newBall;
         Rigidbody2D newBallRb;
+        Heart newHeart;
 
         Balls = new List<Ball>();
         BallRbs = new List<Rigidbody2D>();
+        Hearts = new List<Heart>();
         //       Vector3 paddlePosition = Paddle.Instance.gameObject.transform.position;
         //       Vector3 startingPosition = new Vector3(paddlePosition.x, paddlePosition.y + 0.29f, 0);
         for (int i = 0; i < numBalls; i++)
@@ -106,6 +118,11 @@ public class BallsManager : MonoBehaviour
             Balls.Add(newBall);
             BallRbs.Add(newBallRb);
         }
+
+        Vector3 heartPosition = new Vector3(0.5f, -screenBounds.y / 2, 0);
+        newHeart = Instantiate(heartPrefab, heartPosition, Quaternion.identity);
+        Hearts.Add(newHeart);
+
     }
 
 

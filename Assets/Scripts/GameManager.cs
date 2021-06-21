@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     public bool IsGameStarted { get; set; }
 
     public static event Action<int> OnLifeLost;
+    public static event Action<int> OnLifeGained;
 
     public GameObject LeftWall;
     public GameObject RightWall;
@@ -44,6 +45,7 @@ public class GameManager : MonoBehaviour
 
         this.Lives = AvailableLives;
         Ball.OnBallDeath += OnBallDeath;
+        Heart.OnHeartDeath += OnHeartDeath;
 
         /* Set position of walls to match screen resolution */
         mainCamera = FindObjectOfType<Camera>();
@@ -81,6 +83,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void OnHeartDeath(Heart obj)
+    {
+        this.Lives++;
+        OnLifeGained?.Invoke(this.Lives);
+    }
+
     public void ShowVictoryScreen()
     {
         this.victoryScreen.SetActive(true);
@@ -88,8 +96,6 @@ public class GameManager : MonoBehaviour
 
     private void OnDisable()
     {
-        {
-            Ball.OnBallDeath -= OnBallDeath;
-        }
+        Ball.OnBallDeath -= OnBallDeath;
     }
 }

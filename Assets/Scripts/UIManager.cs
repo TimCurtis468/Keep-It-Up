@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         GameManager.OnLifeLost += OnLifeLost;
+        GameManager.OnLifeGained += OnLifeGained;
         Paddle.OnPaddleHit += OnPaddleHit;
         UpdateScoreText(0);
 
@@ -24,6 +25,12 @@ public class UIManager : MonoBehaviour
     }
 
     private void OnLifeLost(int remainingLives)
+    {
+        string txt = "LIVES: " + remainingLives.ToString();
+        LivesText.text = txt;
+    }
+
+    private void OnLifeGained(int remainingLives)
     {
         string txt = "LIVES: " + remainingLives.ToString();
         LivesText.text = txt;

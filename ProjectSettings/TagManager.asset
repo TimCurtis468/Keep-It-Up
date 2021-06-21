@@ -9,6 +9,7 @@ TagManager:
   - Brick
   - DeathWall
   - Wall
+  - Heart
   layers:
   - Default
   - TransparentFX

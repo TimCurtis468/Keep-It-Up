@@ -108,5 +108,12 @@ public class Paddle : MonoBehaviour
 
             OnPaddleHit?.Invoke(this, (int)speed);
         }
+        else if (coll.gameObject.tag == "Heart")
+        {
+            Heart heart = coll.gameObject.GetComponent<Heart>();
+            BallsManager.Instance.Hearts.Remove(heart);
+            heart.Die();
+        }
+
     }
 }
