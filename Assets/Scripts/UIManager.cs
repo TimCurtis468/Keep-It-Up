@@ -36,9 +36,9 @@ public class UIManager : MonoBehaviour
         ScoreText.text = "SCORE: " + scoreString;
     }
 
-    private void OnPaddleHit(Paddle obj)
+    private void OnPaddleHit(Paddle obj, int speed)
     {
-        UpdateScoreText(1);
+        UpdateScoreText(speed);
     }
 
     private void OnDisable()

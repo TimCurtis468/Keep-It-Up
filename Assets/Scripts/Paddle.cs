@@ -27,15 +27,15 @@ public class Paddle : MonoBehaviour
     private float leftClamp = 0;
     private float rightClamp = 410;
     private float screenEdgeOffset = 0.1f;
-    private float BALL_SPEED_FACTOR = 1.1f;
-    private float MAX_BALL_SPEED = 3.0f;
+    private float BALL_SPEED_FACTOR = 0.05f;
+    private float MAX_BALL_SPEED = 12.0f;
     private SpriteRenderer sr;
     private BoxCollider2D boxCol;
 
     private Vector2 screenBounds;
     private float objectWidth;
 
-    public static event Action<Paddle> OnPaddleHit;
+    public static event Action<Paddle, int> OnPaddleHit;
 
     void Start()
     {
@@ -82,14 +82,14 @@ public class Paddle : MonoBehaviour
             /* Limit speed to max value */
             if (speed < MAX_BALL_SPEED)
             {
-                speed *= BALL_SPEED_FACTOR;
+                speed += BALL_SPEED_FACTOR;
             }
             else
             {
                 speed = MAX_BALL_SPEED;
             }
 
-            Debug.Log("x, y, Speed: " + ballRb.velocity.x.ToString() + ", " + ballRb.velocity.y + ", " + speed.ToString());
+ //           Debug.Log("x, y, Speed: " + ballRb.velocity.x.ToString() + ", " + ballRb.velocity.y + ", " + speed.ToString());
 
             float difference = paddleCentre.x - hitPoint.x;
 
@@ -106,7 +106,7 @@ public class Paddle : MonoBehaviour
             vel_y = Mathf.Sqrt(Mathf.Abs((vel_x * vel_x) - (speed * speed)));   // ABS it to stop errors when getting -ve number */
             ballRb.AddForce(new Vector2(vel_x, vel_y));
 
-            OnPaddleHit?.Invoke(this);
+            OnPaddleHit?.Invoke(this, (int)speed);
         }
     }
 }
