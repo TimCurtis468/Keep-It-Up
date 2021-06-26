@@ -12,17 +12,20 @@ public class DeathWall : MonoBehaviour
             BallsManager.Instance.Balls.Remove(ball);
             ball.Die();
         }
-    }
 
-    // Start is called before the first frame update
-    void Start()
-    {
+        if (collision.tag == "Drumstick")
+        {
+            Drumstick drumstick = collision.GetComponent<Drumstick>();
+            BallsManager.Instance.Drumsticks.Remove(drumstick);
+            drumstick.Die();
+        }
 
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-
+        if (collision.tag == "Heart")
+        {
+            Heart heart = collision.GetComponent<Heart>();
+            BallsManager.Instance.Hearts.Remove(heart);
+            heart.DieNoExtraLife();
+        }
     }
 }

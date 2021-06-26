@@ -26,6 +26,7 @@ public class BallsManager : MonoBehaviour
     [SerializeField]
     private Ball ballPrefab;
     public Heart heartPrefab;
+    public Drumstick drumstickPrefab;
 
     private Ball initialBall;
 
@@ -41,8 +42,10 @@ public class BallsManager : MonoBehaviour
 
     public List<Ball> Balls { get; set; }
     public List<Rigidbody2D> BallRbs { get; set; }
+    public List<Rigidbody2D> DrumstickRbs { get; set; }
 
     public List<Heart> Hearts { get; set; }
+    public List<Drumstick> Drumsticks { get; set; }
 
 
     private void Start()
@@ -58,10 +61,6 @@ public class BallsManager : MonoBehaviour
         Rigidbody2D heartRb;
         if (!GameManager.Instance.IsGameStarted)
         {
-            //            Vector3 paddlePosition = Paddle.Instance.gameObject.transform.position;
-            //            Vector3 ballPosition = new Vector3(paddlePosition.x, paddlePosition.y + 0.29f, 0);
-            //            initialBall.transform.position = ballPosition;
-
             if (Input.GetMouseButtonDown(0))
             {
                 for (int i = 0; i < Balls.Count; i++)
@@ -81,7 +80,23 @@ public class BallsManager : MonoBehaviour
 
                 heartRb = Hearts[0].GetComponent<Rigidbody2D>();
                 heartRb.isKinematic = false;
-                heartRb.AddForce(new Vector2(100, 500));
+                heartRb.AddForce(new Vector2(200, 700));
+
+                for (int i = 0; i < Drumsticks.Count; i++)
+                {
+
+                    float x_speed = UnityEngine.Random.Range(50.0f, 100.0f);
+                    float y_speed = UnityEngine.Random.Range(250.0f, 450.0f);
+                    int direction = UnityEngine.Random.Range(1, 3);
+                    if (direction == 1)
+                    {
+                        x_speed = -x_speed;
+                    }
+
+                    DrumstickRbs[i].isKinematic = false;
+                    DrumstickRbs[i].AddForce(new Vector2(x_speed, y_speed));
+                }
+
 
                 GameManager.Instance.IsGameStarted = true;
             }
@@ -95,6 +110,17 @@ public class BallsManager : MonoBehaviour
             Destroy(ball.gameObject);
         }
 
+        foreach (var heart in this.Hearts.ToList())
+        {
+            Destroy(heart.gameObject);
+        }
+
+
+        foreach (var drumstick in this.Drumsticks.ToList())
+        {
+            Destroy(drumstick.gameObject);
+        }
+
         InitBall();
     }
 
@@ -103,12 +129,17 @@ public class BallsManager : MonoBehaviour
         Ball newBall;
         Rigidbody2D newBallRb;
         Heart newHeart;
+        Drumstick newDrumstick;
+        Rigidbody2D newDrumstickRb;
+
+        int numDrumsticks = UnityEngine.Random.Range(0, 2);
 
         Balls = new List<Ball>();
         BallRbs = new List<Rigidbody2D>();
         Hearts = new List<Heart>();
-        //       Vector3 paddlePosition = Paddle.Instance.gameObject.transform.position;
-        //       Vector3 startingPosition = new Vector3(paddlePosition.x, paddlePosition.y + 0.29f, 0);
+        Drumsticks = new List<Drumstick>();
+        DrumstickRbs = new List<Rigidbody2D>();
+
         for (int i = 0; i < numBalls; i++)
         {
             Vector3 startingPosition = new Vector3(i, -screenBounds.y / 2, 0);
@@ -123,22 +154,15 @@ public class BallsManager : MonoBehaviour
         newHeart = Instantiate(heartPrefab, heartPosition, Quaternion.identity);
         Hearts.Add(newHeart);
 
-    }
-
-
-    public void SpawnBalls(Vector3 position, int count, bool isLightningBall)
-    {
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < numDrumsticks; i++)
         {
-            Ball spawnedBall = Instantiate(ballPrefab, position, Quaternion.identity);
-            if (isLightningBall == true)
-            {
- //               spawnedBall.StartLightningBall();
-            }
-            Rigidbody2D spawnedBallRb = spawnedBall.GetComponent<Rigidbody2D>();
-            spawnedBallRb.isKinematic = false;
-            spawnedBallRb.AddForce(new Vector2(i, initialBallSpeed));
-            this.Balls.Add(spawnedBall);
+            Vector3 startingPosition = new Vector3(i + 0.2f, (-screenBounds.y / 2) + 0.2f, 0);
+            newDrumstick = Instantiate(drumstickPrefab, startingPosition, Quaternion.identity);
+            newDrumstickRb = newDrumstick.GetComponent<Rigidbody2D>();
+
+            Drumsticks.Add(newDrumstick);
+            DrumstickRbs.Add(newDrumstickRb);
         }
+
     }
 }

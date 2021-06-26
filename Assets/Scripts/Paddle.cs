@@ -29,6 +29,8 @@ public class Paddle : MonoBehaviour
     private float screenEdgeOffset = 0.1f;
     private float BALL_SPEED_FACTOR = 0.05f;
     private float MAX_BALL_SPEED = 12.0f;
+    private float MAX_DRUMSTICK_SPEED = 36.0f;
+    private float MIN_DRUMSTICK_SPEED = 16.0f;
     private SpriteRenderer sr;
     private BoxCollider2D boxCol;
 
@@ -89,8 +91,6 @@ public class Paddle : MonoBehaviour
                 speed = MAX_BALL_SPEED;
             }
 
- //           Debug.Log("x, y, Speed: " + ballRb.velocity.x.ToString() + ", " + ballRb.velocity.y + ", " + speed.ToString());
-
             float difference = paddleCentre.x - hitPoint.x;
 
             /* Calculate X and Y velocities by using position of collision on paddle for X */
@@ -112,8 +112,50 @@ public class Paddle : MonoBehaviour
         {
             Heart heart = coll.gameObject.GetComponent<Heart>();
             BallsManager.Instance.Hearts.Remove(heart);
-            heart.Die();
+            heart.Catch();
         }
+        else if (coll.gameObject.tag == "Drumstick")
+        {
+            Rigidbody2D drumstickRb = coll.gameObject.GetComponent<Rigidbody2D>();
+            Vector3 hitPoint = coll.contacts[0].point;
+            Vector3 paddleCentre = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
 
+//            drumstickRb.rotation = Mathf.Clamp(drumstickRb.rotation, 1, 15);
+
+            /* Get speed from x,y velocity */
+            speed = Mathf.Sqrt((drumstickRb.velocity.x * drumstickRb.velocity.x) + (drumstickRb.velocity.y * drumstickRb.velocity.y));
+            /* Limit speed to max value */
+            if (speed < MAX_DRUMSTICK_SPEED)
+            {
+                speed += BALL_SPEED_FACTOR;
+            }
+            else
+            {
+                speed = MAX_DRUMSTICK_SPEED;
+            }
+
+            if (speed < MIN_DRUMSTICK_SPEED)
+            {
+                speed = MIN_DRUMSTICK_SPEED;
+            }
+
+            float difference = paddleCentre.x - hitPoint.x;
+
+            /* Calculate X and Y velocities by using position of collision on paddle for X */
+            if (hitPoint.x < paddleCentre.x)
+            {
+                vel_x = -(Mathf.Abs(difference * 200));
+            }
+            else
+            {
+                vel_x = Mathf.Abs(difference * 200);
+            }
+            /* Modify Y to keep speed constant (plus a bit added each time) */
+            vel_y = Mathf.Sqrt(Mathf.Abs((vel_x * vel_x) - (speed * speed)));   // ABS it to stop errors when getting -ve number */
+            drumstickRb.AddForce(new Vector2(vel_x, vel_y));
+
+            OnPaddleHit?.Invoke(this, (int)speed);
+
+        }
     }
 }

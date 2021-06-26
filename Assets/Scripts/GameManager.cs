@@ -45,7 +45,9 @@ public class GameManager : MonoBehaviour
 
         this.Lives = AvailableLives;
         Ball.OnBallDeath += OnBallDeath;
+        Heart.OnHeartCatch += OnHeartCatch;
         Heart.OnHeartDeath += OnHeartDeath;
+        Drumstick.OnDrumstickDeath += OnDrumstickDeath;
 
         /* Set position of walls to match screen resolution */
         mainCamera = FindObjectOfType<Camera>();
@@ -65,7 +67,34 @@ public class GameManager : MonoBehaviour
 
     private void OnBallDeath(Ball obj)
     {
-        if (BallsManager.Instance.Balls.Count <= 0)
+        DeathCheck();
+    }
+
+    private void OnDrumstickDeath(Drumstick obj)
+    {
+        DeathCheck();
+    }
+
+
+    private void OnHeartCatch(Heart obj)
+    {
+        this.Lives++;
+        OnLifeGained?.Invoke(this.Lives);
+
+        DeathCheck();
+    }
+
+    private void OnHeartDeath(Heart obj)
+    {
+        DeathCheck();
+    }
+
+
+
+    private void DeathCheck()
+    {
+        if ((BallsManager.Instance.Balls.Count <= 0) && (BallsManager.Instance.Drumsticks.Count <= 0) &&
+            (BallsManager.Instance.Hearts.Count <= 0))
         {
             this.Lives--;
 
@@ -81,12 +110,6 @@ public class GameManager : MonoBehaviour
                 BlocksManager.Instance.NewLevel();
             }
         }
-    }
-
-    private void OnHeartDeath(Heart obj)
-    {
-        this.Lives++;
-        OnLifeGained?.Invoke(this.Lives);
     }
 
     public void ShowVictoryScreen()

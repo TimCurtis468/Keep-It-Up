@@ -10,6 +10,7 @@ TagManager:
   - DeathWall
   - Wall
   - Heart
+  - Drumstick
   layers:
   - Default
   - TransparentFX

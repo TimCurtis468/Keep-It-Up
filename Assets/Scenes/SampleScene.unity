@@ -1657,6 +1657,8 @@ MonoBehaviour:
     type: 3}
   heartPrefab: {fileID: 5412384149394903080, guid: c23a34a94a4362d43a1eeff49c818c8d,
     type: 3}
+  drumstickPrefab: {fileID: 9190131478217963922, guid: 5b96753447807db48879d67fa2656d26,
+    type: 3}
   initialBallSpeed: 250
   numBalls: 3
 --- !u!1 &1777434662
