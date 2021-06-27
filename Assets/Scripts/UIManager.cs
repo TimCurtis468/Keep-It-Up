@@ -52,6 +52,7 @@ public class UIManager : MonoBehaviour
     {
         GameManager.OnLifeLost -= OnLifeLost;
         Paddle.OnPaddleHit -= OnPaddleHit;
+        GameManager.OnLifeGained -= OnLifeGained;
     }
 
 }

@@ -100,6 +100,7 @@ public class GameManager : MonoBehaviour
 
             if (this.Lives < 1)
             {
+                BallsManager.Instance.DestroyBalls();
                 gameOverScreen.SetActive(true);
             }
             else
@@ -120,5 +121,9 @@ public class GameManager : MonoBehaviour
     private void OnDisable()
     {
         Ball.OnBallDeath -= OnBallDeath;
+        Heart.OnHeartCatch -= OnHeartCatch;
+        Heart.OnHeartDeath -= OnHeartDeath;
+        Drumstick.OnDrumstickDeath -= OnDrumstickDeath;
+
     }
 }

@@ -53,6 +53,12 @@ public class BallsManager : MonoBehaviour
         mainCamera = FindObjectOfType<Camera>();
         screenBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, mainCamera.transform.position.z));
 
+        Balls = new List<Ball>();
+        BallRbs = new List<Rigidbody2D>();
+        Hearts = new List<Heart>();
+        Drumsticks = new List<Drumstick>();
+        DrumstickRbs = new List<Rigidbody2D>();
+
         InitBall();
     }
 
@@ -103,6 +109,26 @@ public class BallsManager : MonoBehaviour
         }
     }
 
+    public void DestroyBalls()
+    {
+        foreach (var ball in this.Balls.ToList())
+        {
+            Destroy(ball.gameObject);
+        }
+
+        foreach (var heart in this.Hearts.ToList())
+        {
+            Destroy(heart.gameObject);
+        }
+
+
+        foreach (var drumstick in this.Drumsticks.ToList())
+        {
+            Destroy(drumstick.gameObject);
+        }
+    }
+
+
     public void ResetBalls()
     {
         foreach (var ball in this.Balls.ToList())
@@ -134,11 +160,13 @@ public class BallsManager : MonoBehaviour
 
         int numDrumsticks = UnityEngine.Random.Range(0, 2);
 
-        Balls = new List<Ball>();
-        BallRbs = new List<Rigidbody2D>();
-        Hearts = new List<Heart>();
-        Drumsticks = new List<Drumstick>();
-        DrumstickRbs = new List<Rigidbody2D>();
+        Balls.Clear();
+        BallRbs.Clear();
+        Hearts.Clear();
+        Drumsticks.Clear();
+        DrumstickRbs.Clear();
+
+
 
         for (int i = 0; i < numBalls; i++)
         {

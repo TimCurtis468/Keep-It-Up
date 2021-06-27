@@ -110,9 +110,12 @@ public class Paddle : MonoBehaviour
         }
         else if (coll.gameObject.tag == "Heart")
         {
-            Heart heart = coll.gameObject.GetComponent<Heart>();
-            BallsManager.Instance.Hearts.Remove(heart);
-            heart.Catch();
+            if (BallsManager.Instance.Hearts.Count > 0)
+            {
+                Heart heart = coll.gameObject.GetComponent<Heart>();
+                BallsManager.Instance.Hearts.Remove(heart);
+                heart.Catch();
+            }
         }
         else if (coll.gameObject.tag == "Drumstick")
         {
