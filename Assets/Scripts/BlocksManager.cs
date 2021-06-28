@@ -39,6 +39,7 @@ public class BlocksManager : MonoBehaviour
     private const uint MAX_BLOCKS = 10;
     private const float MAX_WIDTH = 4.0f;    // equals 1/4 of the screen width
     private const float MAX_HEIGHT = 3.0f;   // equals 1/4 of the screen height
+    private const float X_PADDING = 1.0f;
     private float width_factor;
     private float height_factor;
 
@@ -63,8 +64,6 @@ public class BlocksManager : MonoBehaviour
 
     public void GenerateBlocks()
     {
-        //        float width = UnityEngine.Random.Range(screenBounds.x / 20.0f, screenBounds.x / 2.0f);
-        //        float height= UnityEngine.Random.Range(screenBounds.y / 5.0f, screenBounds.y / 1.5f);
         float width = UnityEngine.Random.Range(0.5f, 2.0f);
         float height = UnityEngine.Random.Range(1.0f, 1.666f);
 
@@ -74,8 +73,6 @@ public class BlocksManager : MonoBehaviour
         float currentSpawnX = UnityEngine.Random.Range(-screenBounds.x + xOffset + (width * 2), screenBounds.x - (width * 2) - xOffset);
         float currentSpawnY = UnityEngine.Random.Range(-screenBounds.y / 5.0f, screenBounds.y - yOffset - (screenBounds.y / 2.5f));
 
-//        Debug.Log("screenBounds.y: " + screenBounds.y.ToString() + ", height: " + height.ToString() + ", currentSpawnY:" + currentSpawnY.ToString());
-
         Block newBlock = Instantiate(blockPrefab, new Vector3(currentSpawnX, currentSpawnY, 0.0f), Quaternion.identity) as Block;
         newBlock.transform.localScale = new Vector3(width, height, 0.0f);
         this.blockList.Add(newBlock);
@@ -84,7 +81,6 @@ public class BlocksManager : MonoBehaviour
 
     public void NewLevel()
     {
-//#if (PI)
         float screen_width = screenBounds.x;
         float slice_width = (screen_width * 2.0f) / 5.0f;
         float slice_height = screenBounds.y / 4.0f;
@@ -96,12 +92,7 @@ public class BlocksManager : MonoBehaviour
 
         ClearBlocks();
 
-        // Change background - make background manager
-        // - have list of images (like buffs and debuffs)
-        // - drag image to each item in list in Inspector
-
-
-        for ( count = 0; count < 5; count++)
+        for ( count = 0; count < 3; count++)
         {
             float present = UnityEngine.Random.value;
             if( present > 0.5f)
@@ -109,8 +100,10 @@ public class BlocksManager : MonoBehaviour
                 float width = UnityEngine.Random.Range(0.5f, 2.0f);
                 float height = UnityEngine.Random.Range(1.0f, 3.666f);
 
-                float currentSpawnX = -screen_width + width + (slice_width * count);//((slice_width * count) - screen_width) + UnityEngine.Random.Range(0.5f, 1.0f);
+                float currentSpawnX = -screen_width + width + (slice_width * count);
                 float currentSpawnY = slice_height + UnityEngine.Random.Range(0.5f, 1.0f);
+
+                currentSpawnX = Mathf.Clamp(currentSpawnX, -screen_width + width + X_PADDING, screen_width - width - X_PADDING);
 
                 Block newBlock = Instantiate(blockPrefab, new Vector3(currentSpawnX, currentSpawnY, 0.0f), Quaternion.identity) as Block;
                 newBlock.transform.localScale = new Vector3(width, height, 0.0f);
@@ -118,42 +111,6 @@ public class BlocksManager : MonoBehaviour
                 this.blockList.Add(newBlock);
             }
         }
-//#endif
-#if (PI)
-        float currentSpawnX;
-        float currentSpawnY;
-        uint count;
-        uint numBlocks = ++level;
-        float width;
-        float height;
-
-        /* Limit number of blocks to draw */
-        if (numBlocks > MAX_BLOCKS)
-        {
-            numBlocks = MAX_BLOCKS;
-        }
-
-        ClearBlocks();
-
-        Debug.Log("blockList.count: " + blockList.Count.ToString() + ", numBlock: " + numBlocks);
-
-        for (count = 0; count < numBlocks; count++)
-        {
-            width = UnityEngine.Random.Range(1, 2);
-            height = UnityEngine.Random.Range(3, 4);
-
-            width = width * width_factor;
-            height = height * height_factor;
-
-            currentSpawnX = UnityEngine.Random.Range(-screenBounds.x + xOffset + (width * 2), screenBounds.x - (width * 2) - xOffset);
-            currentSpawnY = UnityEngine.Random.Range(-screenBounds.y / 5.0f, screenBounds.y - yOffset - (screenBounds.y / 2.5f));
-
-            Block newBlock = Instantiate(blockPrefab, new Vector3(currentSpawnX, currentSpawnY, 0.0f), Quaternion.identity) as Block;
-            newBlock.transform.localScale = new Vector3(width, height, 0.0f);
-
-            this.blockList.Add(newBlock);
-        }
-#endif
     }
 
     private void ClearBlocks()
