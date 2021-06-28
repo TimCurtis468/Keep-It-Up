@@ -8,6 +8,12 @@ public class UIManager : MonoBehaviour
     public Text ScoreText;
     public Text LivesText;
 
+    public Sprite[] backgrounds;
+
+    private SpriteRenderer spriteRenderer;
+
+    public GameObject background_obj;
+
     public int Score { get; set; }
 
     private void Awake()
@@ -21,13 +27,22 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        spriteRenderer = background_obj.GetComponent<SpriteRenderer>();
+
         OnLifeLost(GameManager.Instance.AvailableLives);
     }
 
     private void OnLifeLost(int remainingLives)
     {
+        int background_num = 0;
         string txt = "LIVES: " + remainingLives.ToString();
         LivesText.text = txt;
+
+        if (backgrounds.Length > 0)
+        {
+            background_num = UnityEngine.Random.Range(0, backgrounds.Length);
+            spriteRenderer.sprite = backgrounds[background_num];
+        }
     }
 
     private void OnLifeGained(int remainingLives)

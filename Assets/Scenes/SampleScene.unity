@@ -1832,6 +1832,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ScoreText: {fileID: 549457747}
   LivesText: {fileID: 1997071089}
+  backgrounds:
+  - {fileID: 21300000, guid: f68478c41f2d7964cbd06c007956cd3a, type: 3}
+  - {fileID: 21300000, guid: e57b452d55bd2534fb3828ee0d672ecb, type: 3}
+  - {fileID: 21300000, guid: 6e145e614cfccdd4a8da739f677f42b4, type: 3}
+  - {fileID: 21300000, guid: 03764b238d3720844b34e2be43bfef0f, type: 3}
+  spriteRenderer: {fileID: 0}
 --- !u!1 &1841961729
 GameObject:
   m_ObjectHideFlags: 0
