@@ -22,9 +22,6 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    public GameObject gameOverScreen;
-    public GameObject victoryScreen;
-
     public int AvailableLives = 3;
 
     public int Lives { get; set; }
@@ -101,7 +98,8 @@ public class GameManager : MonoBehaviour
             if (this.Lives < 1)
             {
                 BallsManager.Instance.DestroyBalls();
-                gameOverScreen.SetActive(true);
+                //gameOverScreen.SetActive(true);
+                SceneManager.LoadScene("GameOver");
             }
             else
             {
@@ -111,11 +109,6 @@ public class GameManager : MonoBehaviour
                 BlocksManager.Instance.NewLevel();
             }
         }
-    }
-
-    public void ShowVictoryScreen()
-    {
-        this.victoryScreen.SetActive(true);
     }
 
     private void OnDisable()

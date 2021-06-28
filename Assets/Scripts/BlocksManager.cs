@@ -75,6 +75,7 @@ public class BlocksManager : MonoBehaviour
 
         Block newBlock = Instantiate(blockPrefab, new Vector3(currentSpawnX, currentSpawnY, 0.0f), Quaternion.identity) as Block;
         newBlock.transform.localScale = new Vector3(width, height, 0.0f);
+        newBlock.tag = "Block";
         this.blockList.Add(newBlock);
 
     }

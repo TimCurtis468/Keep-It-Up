@@ -31,6 +31,7 @@ public class Paddle : MonoBehaviour
     private float MAX_BALL_SPEED = 12.0f;
     private float MAX_DRUMSTICK_SPEED = 36.0f;
     private float MIN_DRUMSTICK_SPEED = 16.0f;
+    private float MIN_DRUMSTICK_Y_VEL = 100.0f;
     private SpriteRenderer sr;
     private BoxCollider2D boxCol;
 
@@ -155,6 +156,16 @@ public class Paddle : MonoBehaviour
             }
             /* Modify Y to keep speed constant (plus a bit added each time) */
             vel_y = Mathf.Sqrt(Mathf.Abs((vel_x * vel_x) - (speed * speed)));   // ABS it to stop errors when getting -ve number */
+
+            if ((vel_y > 0) && (vel_y < MIN_DRUMSTICK_Y_VEL))
+            {
+                vel_y = MIN_DRUMSTICK_Y_VEL;
+            }
+            else if ((vel_y < 0) && (vel_y > -MIN_DRUMSTICK_Y_VEL))
+            {
+                vel_y = -MIN_DRUMSTICK_Y_VEL;
+            }
+
             drumstickRb.AddForce(new Vector2(vel_x, vel_y));
 
             OnPaddleHit?.Invoke(this, (int)speed);

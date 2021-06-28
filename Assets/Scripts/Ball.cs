@@ -6,6 +6,12 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     public bool isLightningBall;
+
+    public AudioClip[] soundFX;
+    public AudioClip[] loFX;
+
+    private AudioSource audioSource;
+
     private SpriteRenderer sr;
 
 //    public ParticleSystem lightningBallEffect;
@@ -19,6 +25,24 @@ public class Ball : MonoBehaviour
     private void Awake()
     {
         this.sr = GetComponentInChildren<SpriteRenderer>();
+        audioSource = GetComponentInChildren<AudioSource>();
+    }
+
+    private void OnCollisionEnter2D(Collision2D coll)
+    {
+        int numFx;
+
+        if ((coll.gameObject.tag == "Ball") ||(coll.gameObject.tag == "Paddle"))
+        {
+            numFx = UnityEngine.Random.Range(0, soundFX.Length);
+            audioSource.PlayOneShot(soundFX[numFx]);
+        }
+        else if (coll.gameObject.tag == "Untagged")
+        {
+            numFx = UnityEngine.Random.Range(0, loFX.Length);
+            audioSource.PlayOneShot(loFX[numFx]);
+        }
+
     }
 
     public void Die()

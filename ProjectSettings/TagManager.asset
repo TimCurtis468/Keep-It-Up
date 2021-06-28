@@ -6,11 +6,11 @@ TagManager:
   tags:
   - Paddle
   - Ball
-  - Brick
   - DeathWall
   - Wall
   - Heart
   - Drumstick
+  - Block
   layers:
   - Default
   - TransparentFX
