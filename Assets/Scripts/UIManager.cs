@@ -56,6 +56,7 @@ public class UIManager : MonoBehaviour
         this.Score += increment;
         string scoreString = this.Score.ToString().PadLeft(5, '0');
         ScoreText.text = "SCORE: " + scoreString;
+        GameManager.Instance.SetScore(Score);
     }
 
     private void OnPaddleHit(Paddle obj, int speed)

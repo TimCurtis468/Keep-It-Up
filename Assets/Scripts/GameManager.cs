@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
     private Vector2 screenBounds;
     private Camera mainCamera;
 
+    private int endScore = 0;
+
     private void Start()
     {
         float objectWidth;
@@ -54,6 +56,11 @@ public class GameManager : MonoBehaviour
 
         objectWidth = LeftWall.GetComponent<SpriteRenderer>().bounds.extents.x;
         LeftWall.transform.position = new Vector3(-(screenBounds.x + (objectWidth / 2)), LeftWall.transform.position.y, LeftWall.transform.position.z);
+    }
+
+    public void SetScore(int score)
+    {
+        endScore = score;
     }
 
     public void RestartGame()
@@ -98,6 +105,8 @@ public class GameManager : MonoBehaviour
             if (this.Lives < 1)
             {
                 BallsManager.Instance.DestroyBalls();
+                EndScreen.score = endScore;
+                EndScreen.name = "TRC";
                 //gameOverScreen.SetActive(true);
                 SceneManager.LoadScene("GameOver");
             }

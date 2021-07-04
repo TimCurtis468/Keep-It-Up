@@ -9,7 +9,7 @@ public class BlocksManager : MonoBehaviour
     private static BlocksManager _instance;
     public static BlocksManager Instance => _instance;
 
-    public static event Action OnLevelLoaded;
+//    public static event Action OnLevelLoaded;
 
     public Block blockPrefab;
 
@@ -34,7 +34,7 @@ public class BlocksManager : MonoBehaviour
     private float xOffset = 0.1f;
     private float yOffset = 0.1f;
 
-    private uint level = 1;
+//    private uint level = 1;
 
     private const uint MAX_BLOCKS = 10;
     private const float MAX_WIDTH = 4.0f;    // equals 1/4 of the screen width
@@ -59,7 +59,7 @@ public class BlocksManager : MonoBehaviour
         this.blockList = new List<Block>();
 
         this.NewLevel();
-        level = 1;
+//        level = 1;
     }
 
     public void GenerateBlocks()
