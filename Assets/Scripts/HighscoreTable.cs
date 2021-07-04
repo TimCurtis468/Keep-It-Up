@@ -10,14 +10,19 @@ public class HighscoreTable : MonoBehaviour
     private List<HighscoreEntry> highscoreEntryList;
     private List<Transform> highscoreEntryTransformList;
 
+    public Text GameScoreText;
+
     private void Awake()
     {
+
         entryContainer = transform.Find("highscoreEntryContainer");
         entryTemplate = entryContainer.Find("highscoreEntryTemplate");
 
         entryTemplate.gameObject.SetActive(false);
 
-        AddHighscoreEntry(EndScreen.score, "TRC");
+        AddHighscoreEntry(EndScreen.score);
+
+        GameScoreText.text = "SCORE: " + EndScreen.score.ToString().PadLeft(5, '0');
 
         string jsonString = PlayerPrefs.GetString("highscoreTable");
         Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
@@ -39,39 +44,20 @@ public class HighscoreTable : MonoBehaviour
         entryTransform.gameObject.SetActive(true);
 
         int rank = transformList.Count + 1;
-        string rankString;
-
-        switch (rank)
-        {
-            case 1:
-                rankString = "1ST";
-                break;
-            case 2:
-                rankString = "2ND";
-                break;
-            case 3:
-                rankString = "3RD";
-                break;
-            default:
-                rankString = rank.ToString() + "TH";
-                break;
-        }
+        string rankString = rank.ToString() + ")";
         entryTransform.Find("posText").GetComponent<Text>().text = rankString;
 
         int score = highscoreEntry.score;
         entryTransform.Find("scoreText").GetComponent<Text>().text = score.ToString();
 
-        string name = highscoreEntry.name;
-        entryTransform.Find("nameText").GetComponent<Text>().text = name;
-
         transformList.Add(entryTransform);
     }
 
-    private void AddHighscoreEntry(int score, string name)
+    private void AddHighscoreEntry(int score)
     {
         Highscores highscores;
         // Create highscore entry
-        HighscoreEntry highscoreEntry = new HighscoreEntry { score = score, name = name };
+        HighscoreEntry highscoreEntry = new HighscoreEntry { score = score };
 
         // Load saved highscores
 
@@ -80,6 +66,11 @@ public class HighscoreTable : MonoBehaviour
         {
             highscores = new Highscores();
             highscores.hsEntryList = new List<HighscoreEntry>();
+            for(int i = 0; i < 10; i++)
+            {
+                HighscoreEntry hse = new HighscoreEntry { score = 0 };
+                highscores.hsEntryList.Add(hse);
+            }
         }
         else
         {
@@ -120,7 +111,7 @@ public class HighscoreTable : MonoBehaviour
     private class HighscoreEntry
     {
         public int score;
-        public string name;
+//        public string name;
     }
 
     private class Highscores

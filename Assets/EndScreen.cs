@@ -6,6 +6,5 @@ public class EndScreen : MonoBehaviour
 {
 
     public static int score;
-    public static string name;
 
 }

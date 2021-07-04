@@ -106,7 +106,6 @@ public class GameManager : MonoBehaviour
             {
                 BallsManager.Instance.DestroyBalls();
                 EndScreen.score = endScore;
-                EndScreen.name = "TRC";
                 //gameOverScreen.SetActive(true);
                 SceneManager.LoadScene("GameOver");
             }
