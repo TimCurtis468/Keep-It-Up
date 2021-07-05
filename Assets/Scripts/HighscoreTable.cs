@@ -12,6 +12,8 @@ public class HighscoreTable : MonoBehaviour
 
     public Text GameScoreText;
 
+    public static float textFactor = 1.0f;
+
     private void Awake()
     {
 
@@ -36,7 +38,8 @@ public class HighscoreTable : MonoBehaviour
 
     private void CreateHighscoreEntryTransform(HighscoreEntry highscoreEntry, Transform container, List<Transform> transformList)
     {
-        float templateHeight = 20.0f;
+        float templateHeight = 55.0f * textFactor;
+        float fSize;
 
         Transform entryTransform = Instantiate(entryTemplate, container);
         RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
@@ -44,11 +47,18 @@ public class HighscoreTable : MonoBehaviour
         entryTransform.gameObject.SetActive(true);
 
         int rank = transformList.Count + 1;
-        string rankString = rank.ToString() + ")";
+        string rankString = rank.ToString();
         entryTransform.Find("posText").GetComponent<Text>().text = rankString;
+        fSize = entryTransform.Find("posText").GetComponent<Text>().fontSize;
+        fSize = fSize * textFactor;
+        entryTransform.Find("posText").GetComponent<Text>().fontSize = (int)fSize;
+
 
         int score = highscoreEntry.score;
         entryTransform.Find("scoreText").GetComponent<Text>().text = score.ToString();
+        fSize = entryTransform.Find("scoreText").GetComponent<Text>().fontSize;
+        fSize = fSize * textFactor;
+        entryTransform.Find("scoreText").GetComponent<Text>().fontSize = (int)fSize;
 
         transformList.Add(entryTransform);
     }

@@ -1,17 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class StartMenu : MonoBehaviour
+public class EndScreen : MonoBehaviour
 {
+    public static int score;
+
+
+    public GameObject hsTable;
     public GameObject Button;
-    public GameObject Title;
-    public GameObject VV;
 
     private float widthFactor;
     private float heightFactor;
+
 
     public void Awake()
     {
@@ -21,6 +22,43 @@ public class StartMenu : MonoBehaviour
 
         widthFactor = Screen.width / 1920.0f;
         heightFactor = Screen.height / 1080.0f;
+
+        HighscoreTable.textFactor = (HighscoreTable.textFactor * Screen.height) / 1080;
+
+        // Highscore table
+        Resize(hsTable);
+
+        // Title background
+        trans = hsTable.transform;
+        childTrans = trans.Find("background");
+        obj = childTrans.gameObject;
+        Resize(obj);
+
+        // Title background
+        trans = hsTable.transform;
+        childTrans = trans.Find("TitleBackground");
+        obj = childTrans.gameObject;
+        Resize(obj);
+
+        // Title text
+        trans = hsTable.transform;
+        childTrans = trans.Find("TitleText");
+        obj = childTrans.gameObject;
+        Resize(obj);
+        ResizeText(obj);
+
+        // Title text
+        trans = hsTable.transform;
+        childTrans = trans.Find("GameScoreText");
+        obj = childTrans.gameObject;
+        Resize(obj);
+        ResizeText(obj);
+
+        // Highscore Entry Container
+        trans = hsTable.transform;
+        childTrans = trans.Find("highscoreEntryContainer");
+        obj = childTrans.gameObject;
+        Resize(obj);
 
         // Button
         Resize(Button);
@@ -32,18 +70,12 @@ public class StartMenu : MonoBehaviour
         obj = childTrans.gameObject;
         Resize(obj);
         ResizeText(obj);
-
-        VV.transform.localScale *= heightFactor;
-        VV.transform.localPosition = new Vector3(VV.transform.localPosition.x * widthFactor, VV.transform.localPosition.y, VV.transform.localPosition.z);
-        Title.transform.localScale *= heightFactor;
-        Title.transform.localPosition = new Vector3(Title.transform.localPosition.x * widthFactor, Title.transform.localPosition.y, Title.transform.localPosition.z);
-
     }
 
     public void ChangeMenuScene(string sceneName)
-   {
-       SceneManager.LoadScene(sceneName);
-   }
+    {
+        SceneManager.LoadScene(sceneName);
+    }
 
     private void Resize(GameObject gameObject)
     {
@@ -67,4 +99,5 @@ public class StartMenu : MonoBehaviour
         Text t = gameObject.GetComponent<Text>();
         t.fontSize = (t.fontSize * Screen.width) / 1920;
     }
+
 }
