@@ -68,6 +68,7 @@ public class Paddle : MonoBehaviour
         transform.position = new Vector3(mousePositionWorldX, paddleInitialY, 0);
     }
 
+    
     private void OnCollisionEnter2D(Collision2D coll)
     {
         float speed;

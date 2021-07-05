@@ -9,6 +9,7 @@ public class EndScreen : MonoBehaviour
 
     public GameObject hsTable;
     public GameObject Button;
+    public GameObject Quit;
 
     private float widthFactor;
     private float heightFactor;
@@ -64,17 +65,32 @@ public class EndScreen : MonoBehaviour
         Resize(Button);
 
         // Button text
-        // Title text
         trans = Button.transform;
         childTrans = trans.Find("Text");
         obj = childTrans.gameObject;
         Resize(obj);
         ResizeText(obj);
+
+        // Quit
+        Resize(Quit);
+
+        // Button text
+        trans = Quit.transform;
+        childTrans = trans.Find("Text");
+        obj = childTrans.gameObject;
+        Resize(obj);
+        ResizeText(obj);
+
     }
 
     public void ChangeMenuScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     private void Resize(GameObject gameObject)
