@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -33,14 +34,28 @@ public class GameManager : MonoBehaviour
 
     public GameObject LeftWall;
     public GameObject RightWall;
+    public GameObject background;
+
     private Vector2 screenBounds;
     private Camera mainCamera;
 
     private int endScore = 0;
 
+
+    private float widthFactor;
+    private float heightFactor;
+
+
     private void Start()
     {
         float objectWidth;
+
+        GameObject obj;
+        Transform trans;
+        Transform childTrans;
+
+        widthFactor = Screen.width / 1920.0f;
+        heightFactor = Screen.height / 1080.0f;
 
         this.Lives = AvailableLives;
         Ball.OnBallDeath += OnBallDeath;
@@ -56,6 +71,13 @@ public class GameManager : MonoBehaviour
 
         objectWidth = LeftWall.GetComponent<SpriteRenderer>().bounds.extents.x;
         LeftWall.transform.position = new Vector3(-(screenBounds.x + (objectWidth / 2)), LeftWall.transform.position.y, LeftWall.transform.position.z);
+
+        // Graphics text
+        trans = background.transform;
+        childTrans = trans.Find("Graphics");
+        obj = childTrans.gameObject;
+        ResizeSpriteRendered(obj);
+
     }
 
     public void SetScore(int score)
@@ -127,4 +149,22 @@ public class GameManager : MonoBehaviour
         Drumstick.OnDrumstickDeath -= OnDrumstickDeath;
 
     }
+
+    private void ResizeSpriteRendered(GameObject gameObject)
+    {
+        float objectWidth;
+        float objectHeight;
+        SpriteRenderer sr;
+
+        sr = gameObject.GetComponent<SpriteRenderer>();
+        objectWidth = sr.transform.localScale.x;
+        objectHeight = sr.transform.localScale.y;
+
+        objectWidth = objectWidth * widthFactor;
+        objectHeight = objectHeight * heightFactor;
+
+        sr.transform.localScale = new Vector2(objectWidth, objectHeight);
+    }
 }
+
+

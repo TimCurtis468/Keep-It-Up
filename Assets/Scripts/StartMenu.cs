@@ -9,6 +9,7 @@ public class StartMenu : MonoBehaviour
     public GameObject Button;
     public GameObject Title;
     public GameObject VV;
+    public GameObject background;
 
     private float widthFactor;
     private float heightFactor;
@@ -19,14 +20,18 @@ public class StartMenu : MonoBehaviour
         Transform trans;
         Transform childTrans;
 
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+
         widthFactor = Screen.width / 1920.0f;
         heightFactor = Screen.height / 1080.0f;
 
         // Button
         Resize(Button);
 
+        // background
+        ResizeSpriteRendered(background);
+
         // Button text
-        // Title text
         trans = Button.transform;
         childTrans = trans.Find("Text");
         obj = childTrans.gameObject;
@@ -66,5 +71,21 @@ public class StartMenu : MonoBehaviour
     {
         Text t = gameObject.GetComponent<Text>();
         t.fontSize = (t.fontSize * Screen.width) / 1920;
+    }
+
+    private void ResizeSpriteRendered(GameObject gameObject)
+    {
+        float objectWidth;
+        float objectHeight;
+        SpriteRenderer sr;
+
+        sr = gameObject.GetComponent<SpriteRenderer>();
+        objectWidth = sr.transform.localScale.x;
+        objectHeight = sr.transform.localScale.y;
+
+        objectWidth = objectWidth * widthFactor;
+        objectHeight = objectHeight * heightFactor;
+
+        sr.transform.localScale = new Vector2(objectWidth, objectHeight);
     }
 }

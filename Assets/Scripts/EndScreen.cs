@@ -10,6 +10,7 @@ public class EndScreen : MonoBehaviour
     public GameObject hsTable;
     public GameObject Button;
     public GameObject Quit;
+    public GameObject Bground;
 
     private float widthFactor;
     private float heightFactor;
@@ -46,7 +47,8 @@ public class EndScreen : MonoBehaviour
         childTrans = trans.Find("TitleText");
         obj = childTrans.gameObject;
         Resize(obj);
-        ResizeText(obj);
+//        ResizeText(obj);
+        PositionText(obj);
 
         // Title text
         trans = hsTable.transform;
@@ -60,6 +62,14 @@ public class EndScreen : MonoBehaviour
         childTrans = trans.Find("highscoreEntryContainer");
         obj = childTrans.gameObject;
         Resize(obj);
+
+        // Highscore Entry Container
+/*
+        trans = hsTable.transform;
+        childTrans = trans.Find("highscoreEntryTemplate");
+        obj = childTrans.gameObject;
+        Resize(obj);
+*/
 
         // Button
         Resize(Button);
@@ -80,6 +90,8 @@ public class EndScreen : MonoBehaviour
         obj = childTrans.gameObject;
         Resize(obj);
         ResizeText(obj);
+
+        ResizeSpriteRendered(Bground);
 
     }
 
@@ -116,4 +128,36 @@ public class EndScreen : MonoBehaviour
         t.fontSize = (t.fontSize * Screen.width) / 1920;
     }
 
+
+    private void ResizeSpriteRendered(GameObject gameObject)
+    {
+        float objectWidth;
+        float objectHeight;
+        SpriteRenderer sr;
+
+        sr = gameObject.GetComponent<SpriteRenderer>();
+        objectWidth = sr.transform.localScale.x;
+        objectHeight = sr.transform.localScale.y;
+
+        objectWidth = objectWidth * widthFactor;
+        objectHeight = objectHeight * heightFactor;
+
+        sr.transform.localScale = new Vector2(objectWidth, objectHeight);
+    }
+
+    private void PositionText(GameObject gameObject)
+    {
+        float objectPosx;
+        float objectPosy;
+        RectTransform rt;
+
+        rt = gameObject.GetComponent<RectTransform>();
+        objectPosx = rt.localPosition.x;
+        objectPosy = rt.localPosition.y;
+
+        objectPosx = objectPosx * widthFactor;
+        objectPosy = objectPosy * heightFactor;
+
+        rt.localPosition = new Vector3(objectPosx, objectPosy, 0);
+    }
 }
