@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
         GameManager.OnLifeLost += OnLifeLost;
         GameManager.OnLifeGained += OnLifeGained;
         Paddle.OnPaddleHit += OnPaddleHit;
+        Block.OnBlockHit += OnBlockHit;
         UpdateScoreText(0);
 
     }
@@ -64,11 +65,17 @@ public class UIManager : MonoBehaviour
         UpdateScoreText(speed);
     }
 
+    private void OnBlockHit()
+    {
+        UpdateScoreText(1);
+    }
+
     private void OnDisable()
     {
         GameManager.OnLifeLost -= OnLifeLost;
         Paddle.OnPaddleHit -= OnPaddleHit;
         GameManager.OnLifeGained -= OnLifeGained;
+        Block.OnBlockHit-= OnBlockHit;
     }
 
 }

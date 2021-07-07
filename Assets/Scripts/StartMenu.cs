@@ -42,7 +42,8 @@ public class StartMenu : MonoBehaviour
         VV.transform.localPosition = new Vector3(VV.transform.localPosition.x * widthFactor, VV.transform.localPosition.y, VV.transform.localPosition.z);
         Title.transform.localScale *= heightFactor;
         Title.transform.localPosition = new Vector3(Title.transform.localPosition.x * widthFactor, Title.transform.localPosition.y, Title.transform.localPosition.z);
-
+        PositionText(Title);
+        PositionText(VV);
     }
 
     public void ChangeMenuScene(string sceneName)
@@ -87,5 +88,21 @@ public class StartMenu : MonoBehaviour
         objectHeight = objectHeight * heightFactor;
 
         sr.transform.localScale = new Vector2(objectWidth, objectHeight);
+    }
+
+    private void PositionText(GameObject gameObject)
+    {
+        float objectPosx;
+        float objectPosy;
+        RectTransform rt;
+
+        rt = gameObject.GetComponent<RectTransform>();
+        objectPosx = rt.localPosition.x;
+        objectPosy = rt.localPosition.y;
+
+        objectPosx = objectPosx * widthFactor;
+        objectPosy = objectPosy * heightFactor;
+
+        rt.localPosition = new Vector3(objectPosx, objectPosy, 0);
     }
 }

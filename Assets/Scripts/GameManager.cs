@@ -45,6 +45,10 @@ public class GameManager : MonoBehaviour
     private float widthFactor;
     private float heightFactor;
 
+    public AudioClip heartCatch;
+    private AudioSource audioSource;
+
+
 
     private void Start()
     {
@@ -78,6 +82,7 @@ public class GameManager : MonoBehaviour
         obj = childTrans.gameObject;
         ResizeSpriteRendered(obj);
 
+        audioSource = GetComponentInChildren<AudioSource>();
     }
 
     public void SetScore(int score)
@@ -104,6 +109,8 @@ public class GameManager : MonoBehaviour
 
     private void OnHeartCatch(Heart obj)
     {
+        audioSource.PlayOneShot(heartCatch);
+
         this.Lives++;
         OnLifeGained?.Invoke(this.Lives);
 

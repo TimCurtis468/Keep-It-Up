@@ -34,11 +34,7 @@ public class BlocksManager : MonoBehaviour
     private float xOffset = 0.1f;
     private float yOffset = 0.1f;
 
-//    private uint level = 1;
 
-    private const uint MAX_BLOCKS = 10;
-    private const float MAX_WIDTH = 4.0f;    // equals 1/4 of the screen width
-    private const float MAX_HEIGHT = 3.0f;   // equals 1/4 of the screen height
     private const float X_PADDING = 1.0f;
     private float width_factor;
     private float height_factor;
@@ -83,7 +79,7 @@ public class BlocksManager : MonoBehaviour
     public void NewLevel()
     {
         float screen_width = screenBounds.x;
-        float slice_width = (screen_width * 2.0f) / 5.0f;
+        float slice_width = (screen_width * 2.0f) / 3.0f;
         float slice_height = screenBounds.y / 4.0f;
 
         slice_width = slice_width * width_factor;
@@ -98,7 +94,7 @@ public class BlocksManager : MonoBehaviour
             float present = UnityEngine.Random.value;
             if( present > 0.5f)
             {
-                float width = UnityEngine.Random.Range(0.5f, 2.0f);
+                float width = UnityEngine.Random.Range(0.5f, 2.5f);
                 float height = UnityEngine.Random.Range(1.0f, 3.666f);
 
                 float currentSpawnX = -screen_width + width + (slice_width * count);
@@ -108,6 +104,8 @@ public class BlocksManager : MonoBehaviour
 
                 Block newBlock = Instantiate(blockPrefab, new Vector3(currentSpawnX, currentSpawnY, 0.0f), Quaternion.identity) as Block;
                 newBlock.transform.localScale = new Vector3(width, height, 0.0f);
+
+                Debug.Log("count: " + count.ToString() + ", width: " + width.ToString() + ", currentSpawnX: " + currentSpawnX.ToString());
 
                 this.blockList.Add(newBlock);
             }

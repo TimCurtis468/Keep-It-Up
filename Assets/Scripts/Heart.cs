@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Heart : MonoBehaviour
 {
-    public bool isLightningBall;
     private SpriteRenderer sr;
 
     public static event Action<Heart> OnHeartCatch;
@@ -14,7 +13,7 @@ public class Heart : MonoBehaviour
     private void Awake()
     {
         this.sr = GetComponentInChildren<SpriteRenderer>();
-    }
+   }
 
     public void Catch()
     {

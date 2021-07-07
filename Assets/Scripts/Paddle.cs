@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Paddle : MonoBehaviour
@@ -124,8 +122,6 @@ public class Paddle : MonoBehaviour
             Rigidbody2D drumstickRb = coll.gameObject.GetComponent<Rigidbody2D>();
             Vector3 hitPoint = coll.contacts[0].point;
             Vector3 paddleCentre = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
-
-//            drumstickRb.rotation = Mathf.Clamp(drumstickRb.rotation, 1, 15);
 
             /* Get speed from x,y velocity */
             speed = Mathf.Sqrt((drumstickRb.velocity.x * drumstickRb.velocity.x) + (drumstickRb.velocity.y * drumstickRb.velocity.y));

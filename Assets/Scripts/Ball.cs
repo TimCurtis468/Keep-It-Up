@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    public bool isLightningBall;
-
     public AudioClip[] soundFX;
     public AudioClip[] loFX;
 
@@ -14,13 +12,8 @@ public class Ball : MonoBehaviour
 
     private SpriteRenderer sr;
 
-//    public ParticleSystem lightningBallEffect;
-
-//    public float lightningBallDuration = 10;
-
     public static event Action<Ball> OnBallDeath;
-    //    public static event Action<Ball> OnLightningBallEnable;
-    //    public static event Action<Ball> OnLightningBallDisable;
+
 
     private void Awake()
     {
@@ -49,42 +42,5 @@ public class Ball : MonoBehaviour
     {
         OnBallDeath?.Invoke(this);
         Destroy(this.gameObject);
-    }
-
-//    internal void StartLightningBall()
- //   {
-#if (PI)
-        if (this.isLightningBall == false)
-        {
-            this.isLightningBall = true;
-            this.sr.enabled = false;
-            lightningBallEffect.gameObject.SetActive(true);
-            StartCoroutine(StopLightningBallAfterTime(this.lightningBallDuration));
-
-            OnLightningBallEnable?.Invoke(this);
-
-        }
-#endif
-//    }
-
-//    private IEnumerator StopLightningBallAfterTime(float seconds)
-//    {
-//        yield return new WaitForSeconds(seconds);
-//
-//        StopLightingBall();
-//    }
-
-    private void StopLightingBall()
-    {
-#if (PI)
-        if (this.isLightningBall == true)
-        {
-            this.isLightningBall = false;
-            this.sr.enabled = true;
-            lightningBallEffect.gameObject.SetActive(false);
-
-            OnLightningBallDisable?.Invoke(this);
-        }
-#endif
     }
 }

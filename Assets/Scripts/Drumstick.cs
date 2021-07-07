@@ -9,7 +9,6 @@ public class Drumstick : MonoBehaviour
     private SpriteRenderer sr;
 
     public AudioClip[] soundFX;
-//    public AudioClip[] loFX;
 
     private AudioSource audioSource;
 
