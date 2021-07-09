@@ -35,7 +35,11 @@ public class Ball : MonoBehaviour
             numFx = UnityEngine.Random.Range(0, loFX.Length);
             audioSource.PlayOneShot(loFX[numFx]);
         }
-
+        else if(coll.gameObject.tag == "Block")
+        {
+            numFx = UnityEngine.Random.Range(0, loFX.Length);
+            audioSource.PlayOneShot(loFX[numFx]);
+        }
     }
 
     public void Die()
