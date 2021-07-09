@@ -94,18 +94,16 @@ public class BlocksManager : MonoBehaviour
             float present = UnityEngine.Random.value;
             if( present > 0.5f)
             {
-                float width = UnityEngine.Random.Range(0.5f, 2.5f);
-                float height = UnityEngine.Random.Range(1.0f, 3.666f);
+                float width = UnityEngine.Random.Range(1.0f, 2.5f);
+                float height = UnityEngine.Random.Range(0.5f, 3.666f);
 
                 float currentSpawnX = -screen_width + width + (slice_width * count);
-                float currentSpawnY = slice_height + UnityEngine.Random.Range(0.5f, 1.0f);
+                float currentSpawnY = slice_height + UnityEngine.Random.Range(-2.0f, 2.0f);
 
                 currentSpawnX = Mathf.Clamp(currentSpawnX, -screen_width + width + X_PADDING, screen_width - width - X_PADDING);
 
                 Block newBlock = Instantiate(blockPrefab, new Vector3(currentSpawnX, currentSpawnY, 0.0f), Quaternion.identity) as Block;
                 newBlock.transform.localScale = new Vector3(width, height, 0.0f);
-
-                Debug.Log("count: " + count.ToString() + ", width: " + width.ToString() + ", currentSpawnX: " + currentSpawnX.ToString());
 
                 this.blockList.Add(newBlock);
             }

@@ -65,6 +65,10 @@ public class BallsManager : MonoBehaviour
     private void Update()
     {
         Rigidbody2D heartRb;
+        float rand_x;
+        float rand_y;
+        float rand_dir;
+
         if (!GameManager.Instance.IsGameStarted)
         {
             if (Input.GetMouseButtonDown(0))
@@ -86,7 +90,18 @@ public class BallsManager : MonoBehaviour
 
                 heartRb = Hearts[0].GetComponent<Rigidbody2D>();
                 heartRb.isKinematic = false;
-                heartRb.AddForce(new Vector2(200, 700));
+                rand_x = UnityEngine.Random.Range(100.0f, 200.0f);
+                rand_y = UnityEngine.Random.Range(100.0f, 200.0f);
+                rand_dir = UnityEngine.Random.Range(0.0f, 1.0f);
+                if(rand_dir < 0.5f)
+                {
+                    rand_x = 500.0f + rand_x;
+                }
+                else
+                {
+                    rand_x = -500.0f - rand_x;
+                }
+                heartRb.AddForce(new Vector2(rand_x, 1000.0f + rand_y));
 
                 for (int i = 0; i < Drumsticks.Count; i++)
                 {
@@ -170,7 +185,7 @@ public class BallsManager : MonoBehaviour
 
         for (int i = 0; i < numBalls; i++)
         {
-            Vector3 startingPosition = new Vector3(i, -screenBounds.y / 2, 0);
+            Vector3 startingPosition = new Vector3((i - 1) * numBalls, -screenBounds.y / 2, 0);
             newBall = Instantiate(ballPrefab, startingPosition, Quaternion.identity);
             newBallRb = newBall.GetComponent<Rigidbody2D>();
 
@@ -178,7 +193,7 @@ public class BallsManager : MonoBehaviour
             BallRbs.Add(newBallRb);
         }
 
-        Vector3 heartPosition = new Vector3(0.5f, -screenBounds.y / 2, 0);
+        Vector3 heartPosition = new Vector3(0.8f, -screenBounds.y / 2, 0);
         newHeart = Instantiate(heartPrefab, heartPosition, Quaternion.identity);
         Hearts.Add(newHeart);
 
