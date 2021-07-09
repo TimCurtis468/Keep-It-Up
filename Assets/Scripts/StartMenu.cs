@@ -20,7 +20,7 @@ public class StartMenu : MonoBehaviour
         Transform trans;
         Transform childTrans;
 
-        Screen.orientation = ScreenOrientation.LandscapeLeft;
+        Screen.orientation = ScreenOrientation.LandscapeRight;
 
         widthFactor = Screen.width / 1920.0f;
         heightFactor = Screen.height / 1080.0f;

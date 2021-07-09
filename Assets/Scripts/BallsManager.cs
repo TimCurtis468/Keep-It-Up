@@ -95,13 +95,13 @@ public class BallsManager : MonoBehaviour
                 rand_dir = UnityEngine.Random.Range(0.0f, 1.0f);
                 if(rand_dir < 0.5f)
                 {
-                    rand_x = 500.0f + rand_x;
+                    rand_x = 300.0f + rand_x;
                 }
                 else
                 {
-                    rand_x = -500.0f - rand_x;
+                    rand_x = -300.0f - rand_x;
                 }
-                heartRb.AddForce(new Vector2(rand_x, 1000.0f + rand_y));
+                heartRb.AddForce(new Vector2(rand_x, 700.0f + rand_y));
 
                 for (int i = 0; i < Drumsticks.Count; i++)
                 {
